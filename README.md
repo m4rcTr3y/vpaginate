@@ -2,7 +2,7 @@
 #  VPaginate
 
 > simple vue pagination plugin :rocket: .
- * version: 1.0.0
+ * version: 1.0.1
  * Author: m4rcTr3y
  * Email: marktrevis61@gmail.com
  
