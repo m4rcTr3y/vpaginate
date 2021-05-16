@@ -1,7 +1,7 @@
 // SIMPLE VUE PAGINATION PLUGIN
 // Author: m4rcTr3y
 // Email: 'marktrevis61@gmail.com'
-// Version :1.0.0
+// Version :1.0.1
 
 
 var default_options = {
