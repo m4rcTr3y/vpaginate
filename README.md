@@ -64,4 +64,4 @@ Option | value
 
 > showing active link on pagination links.
 
-> added styling to the links and can be diabled in the configurations 
+> added styling to the links and can be disabled in the configurations 
