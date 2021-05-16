@@ -10,15 +10,16 @@
 
 ## configuration:
 
-### javascript
+### javascript:
 ```javascript
 
   //default config
   var config = {
       perPage:3,
       componentName:'v-paginate',
-      className:'v-paginate'
-      
+      className:'v-paginate',
+      links_class:'vplinks',
+      default_styling:true
   };
   
   //activate plugin
@@ -26,7 +27,7 @@
 
 ```
 
-### html
+### html:
 > We use the "v-paginate" component provided by default from the vpaginate library.
 
 > Data to be paginated can then be bond to the element using the "vdata" prop
@@ -44,14 +45,23 @@
 
 ```
 ## output:
-![example](res/example.png)
+![example](res/screenshot.png)
 
 
-> ## Configuration Options
+> ## Configuration Options:
 
 Option | value
 -------|------
 **perPage**   |    _default_: 3 "sets how many item to display per page"
 **componentName** |   _default_: ("v-paginate")  sets the name of the pagination component that renders and paginates the items
 **className**     |  _default_: ("v-paginate")  sets the class name to be used to apply css to the pagination component.
+**links_class**   | _default_: ("vplinks") styping class for the page links
+**default_styling**| _default: 'true'  enable default links styling or not
+   
  
+##  Changelog:
+> links pagination next and forward button.
+
+> showing active link on pagination links.
+
+> added styling to the links and can be diabled in the configurations 
