@@ -24,6 +24,24 @@
   
   //activate plugin
   Vue.use(Vpaginate,config);
+  
+  new Vue({
+    el: "#vue-app",
+    data(){ 
+      return{
+         mydata:[{name:'jquery'},{name:"ruby"},
+         {name:"algorithm"},{name:"datascience"},
+         {name:"haskel"},{name:"python"},
+         {name:"java"},{name:"google"},
+         {name:"stackoverflow"},{name:"php"},
+         {name:"js"},{name:"c"},
+         {name:"django"}],
+         text: "vue paginate."}
+      
+    },
+    
+  });
+  
 
 ```
 

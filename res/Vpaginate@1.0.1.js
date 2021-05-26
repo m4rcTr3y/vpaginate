@@ -13,7 +13,6 @@ var default_options = {
 };
 
 
-
 var Vpaginate = function(Vue,options){
   Vue.VERSION = 'v2.6.12';
   var useOptions = {...default_options,...options};
@@ -70,28 +69,16 @@ var Vpaginate = function(Vue,options){
         text-decoration:none;
         opacity:.4;
       }
-     
-      
-      
-      
     `;
 
     var css = document.createElement('style');
+    css.setAttribute('c-css','Vpaginate');
     css.innerText = custom_css;
     document.head.append(css);
   };
   
-  Vue.mixin({
-    created(){
-    if(useOptions.default_styling){
-      addCss();
-    }
-    else null
-      
-    }
-  })
-  Vue.component(useOptions.componentName,{
-    props:['vdata'],
+  Vue.prototype.$currentPage = '';
+  var mixin = Vue.mixin({
     data(){
       return {
         className: useOptions.className,
@@ -100,17 +87,29 @@ var Vpaginate = function(Vue,options){
         page:{},
         Cpage:''
       }
-    },
+    }
+  })
+ 
+ function currentPage(e){
+   Vue.prototype.$currentPage = e
+ }
+  Vue.component(useOptions.componentName,{
+    props:['vdata'],
+    mixin:[mixin],
     methods:{
       setPage(n,p){
           this.page = n;
           this.Cpage = p+1;
+          currentPage(this.Cpage)
+          
       },
       back(){
         var newp = {...this.page};
         newp.fro -= this.count;
         this.Cpage -= 1;
         this.page = newp;
+        currentPage(this.Cpage)
+          
       },
       forward(){
         var newp = {...this.page};
@@ -120,17 +119,35 @@ var Vpaginate = function(Vue,options){
         {
           this.Cpage += 1;
         }
+        currentPage(this.Cpage)
       },
       
+      isEmpty(pmap, cpage){
+        var crnt = null;
+        var empty = false;
+        pmap.forEach(function(item){
+          if(item.page == parseInt(cpage)){
+            crnt = item
+          }
+        })
+        var newobj = [...this.vdata]
+        if(crnt == null){
+          empty = true
+        }
+        
+        return empty
+      },
+    
       
     
       
   },
     computed: {
-    compEl(){
+    compData(){
         var newd = [...this.vdata];
         return newd.splice(this.page.fro,this.page.to);
     },
+    
       
     pageMap(){
         let len = this.vdata.length;
@@ -153,29 +170,32 @@ var Vpaginate = function(Vue,options){
     }
   },
     created(){
-      this.setPage(this.pageMap[0].range,this.pageMap[0].page);
-      Vue.prototype.$currentPage = this.cPage;
+    this.setPage(this.pageMap[0].range,this.pageMap[0].page);
+    if(useOptions.default_styling){
+      addCss();
+    }
+    else null
+      
+    
+    
   
   },
     template:`
      <div>
       <ul :class="className">
-        <slot v-for='(dat,indx) in compEl' v-bind:data.sync="dat"></slot>
+        <slot v-for='(dat,indx) in compData' v-bind:data.sync="dat"></slot>
       </ul>
-      
       <div :class="vplinks">
             <a href="#" v-if="Cpage > 1" @click="back()" class="link"> < </a>
             <a href="#"  v-else class="disabled"> < </a>
             <a href="#"  v-for="(link,ind) in pageMap" @click="setPage(link.range, link.page)" :key="ind" :class=" Cpage-1 == link.page ? 'active' : 'link' " >{{link.page+1}}</a>
-            <a href="#" v-if="count > Cpage" @click="forward()" class="link"> > </a>
+            <a href="#" v-if="count > Cpage && isEmpty(pageMap,Cpage) == false" @click="forward()" class="link"> > </a>
             <a href="#"  v-else class="disabled"> > </a>
-            
       </div>
     </div>
     `
   });
   
-  Vue.prototype.$currentPage = Cpage
-   
+  
   
 };

@@ -1,4 +1,4 @@
-Vue.use(Vpaginate,{perPage:4,default_styling:false});
+Vue.use(Vpaginate,{perPage:4,default_styling:true});
 
 var study = new Vue({
   el: "#vue-app",
@@ -16,13 +16,13 @@ var study = new Vue({
     {name:"php"},
     {name:"js"},
     {name:"c"},
-    {name:"django"}
+    {name:"django"},
     ],
     text: "vue paginate."
   },
   computed:{
-    tre(){
-      return this.$tre
-    }
+    
+  },
+  created(){
   }
 });
